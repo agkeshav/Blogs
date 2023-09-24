@@ -18,7 +18,7 @@ export default function ShowScreen(props) {
       headerRight: () => (
         <TouchableOpacity
           style={styles.headerIcon}
-          onPress={() => props.navigation.navigate("Edit")}
+          onPress={() => props.navigation.navigate("Edit", { id })}
         >
           <Feather name="edit-2" size={24} color="black" />
         </TouchableOpacity>
