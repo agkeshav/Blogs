@@ -11,7 +11,19 @@ import React, { useContext, useEffect } from "react";
 import { Context as BlogContext } from "../context/BlogContext";
 import { FontAwesome } from "@expo/vector-icons";
 export default function IndexScreen({ navigation }) {
-  const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext); // here that value wil come which we have passed in the blogcontext.provider as props
+  const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext); // here that value wil come which we have passed in the blogcontext.provider as props
+
+  useEffect(() => {
+    getBlogPosts();
+    const listener = navigation.addListener("didFocus", () => {
+      getBlogPosts();
+    });
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -22,13 +34,13 @@ export default function IndexScreen({ navigation }) {
           <MaterialIcons name="add" size={24} color="black" />
         </TouchableOpacity>
       ),
-    }); 
+    });
   }, [navigation]);
   return (
     <View>
       <FlatList
         data={state}
-        keyExtractor={(data) => data.title}
+        keyExtractor={(data) => data.id}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity

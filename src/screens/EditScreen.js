@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context as BlogContext } from "../context/BlogContext";
 
 export default function EditScreen(props) {
@@ -15,6 +15,9 @@ export default function EditScreen(props) {
   const [content, setContent] = useState(blogPost.content);
   const [title, setTitle] = useState(blogPost.title);
 
+  useEffect(() => {
+    props.navigation.addListener("didFocus", () => {});
+  }, [title, content]);
   return (
     <View>
       <Text style={styles.text1}>Enter New Title:</Text>
